@@ -20,7 +20,7 @@ Linux (Ubuntu 22.04) / Python 3.11 / CPU
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/llama-cpp-python-0.3.8-wheels/llama_cpp_python-0.3.8-cp311-cp311-linux_x86_64.cpu.whl
 ```
 
-Linux (Ubuntu 22.04) / Python 3.11 / CUDA
+Linux (Ubuntu 22.04) / Python 3.11 / CUDA (Google Colab)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/llama-cpp-python-0.3.8-wheels/llama_cpp_python-0.3.8-cp311-cp311-linux_x86_64.cuda.whl
 ```
