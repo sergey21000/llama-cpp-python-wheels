@@ -7,6 +7,8 @@ Pre-built wheels for llama-cpp-python are available for the following OS and Pyt
 - Windows / Python 3.12 / CPU
 - Windows / Python 3.12 / CUDA
 
+All available wheels can be found in the [Releases](https://github.com/sergey21000/llama-cpp-python-wheels/releases)
+
 
 # Installation Examples
 
@@ -34,6 +36,7 @@ Windows / Python 3.12 / CUDA
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/llama-cpp-python-0.3.8-wheels/llama_cpp_python-0.3.8-cp312-cp312-win_amd64.cuda.whl
 ```
+
 
 # Build Instructions
 
