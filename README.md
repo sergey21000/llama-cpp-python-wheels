@@ -3,34 +3,35 @@
 # Pre-built Wheels for llama-cpp-python
 
 Pre-built wheels for (llama-cpp-python)[https://github.com/abetlen/llama-cpp-python] are available for the following OS and Python versions:
-- Linux (Ubuntu 22.04) / Python 3.12 / CPU
-- Linux (Ubuntu 22.04) / Python 3.12 / CUDA
-- Linux (Ubuntu 22.04) / Python 3.11 / CPU (Google Colab)
-- Linux (Ubuntu 22.04) / Python 3.11 / CUDA (Google Colab)
+- Linux / Python 3.12 / CPU
+- Linux / Python 3.12 / CUDA
+- Linux / Python 3.11 / CPU (Google Colab)
+- Linux / Python 3.11 / CUDA (Google Colab)
 - Windows / Python 3.12 / CPU
 - Windows / Python 3.12 / CUDA
 
+Wheels assembly was done on Ubuntu 22.04 and Windows 10  
 All available wheels can be found in the [Releases](https://github.com/sergey21000/llama-cpp-python-wheels/releases)
 
 
 # Installation Examples
 
-Linux (Ubuntu 22.04) / Python 3.12 / CPU
+Linux / Python 3.12 / CPU
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.9/llama_cpp_python-0.3.9-cp312-cp312-linux_x86_64.cpu.whl
 ```
 
-Linux (Ubuntu 22.04) / Python 3.12 / CUDA
+Linux / Python 3.12 / CUDA
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.9/llama_cpp_python-0.3.9-cp312-cp312-linux_x86_64.cuda.whl
 ```
 
-Linux (Ubuntu 22.04) / Python 3.11 / CPU (Google Colab)
+Linux / Python 3.11 / CPU (Google Colab)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.9/llama_cpp_python-0.3.9-cp311-cp311-linux_x86_64.cpu.whl
 ```
 
-Linux (Ubuntu 22.04) / Python 3.11 / CUDA (Google Colab)
+Linux / Python 3.11 / CUDA (Google Colab)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.9/llama_cpp_python-0.3.9-cp311-cp311-linux_x86_64.cuda.whl
 ```
@@ -80,6 +81,6 @@ set CMAKE_ARGS=-DGGML_CUDA=ON
 pip wheel --no-deps --wheel-dir=llamacpp_wheel llama-cpp-python
 ```
 
-[!NOTE]
-To install `llama-cpp-python` on Windows with CUDA support, you must first install [Visual Studio 2022 Community](https://visualstudio.microsoft.com/ru/downloads/) and [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit-archive), as indicated in this [instruction](https://github.com/abetlen/llama-cpp-python/discussions/871#discussion-5812096)  
+> [!NOTE]
+> To install `llama-cpp-python` on Windows with CUDA support, you must first install [Visual Studio 2022 Community](https://visualstudio.microsoft.com/ru/downloads/) and [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit-archive), as indicated in this [instruction](https://github.com/abetlen/llama-cpp-python/discussions/871#discussion-5812096)  
 
