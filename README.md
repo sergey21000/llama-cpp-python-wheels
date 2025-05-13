@@ -2,7 +2,7 @@
 
 # Pre-built Wheels for llama-cpp-python
 
-Pre-built wheels for (llama-cpp-python)[https://github.com/abetlen/llama-cpp-python] are available for the following OS and Python versions:
+Pre-built wheels for [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) are available for the following OS and Python versions:
 - Linux / Python 3.12 / CPU
 - Linux / Python 3.12 / CUDA
 - Linux / Python 3.11 / CPU (Google Colab)
