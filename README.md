@@ -10,7 +10,7 @@ Pre-built wheels for [llama-cpp-python](https://github.com/abetlen/llama-cpp-pyt
 - Linux / Python 3.11 / CPU / CUDA (Google Colab)
 - Windows / Python 3.12 / CPU / CUDA
 
-Wheels assembly was done on Ubuntu 22.04 / CUDA 12.5 (Google Colab) and Windows 10 / CUDA 12.8
+Wheels assembly was done on Ubuntu 22.04 / CUDA 12.5 (Google Colab) and Windows 10 / CUDA 12.8  
 All available wheels can be found in the [Releases](https://github.com/sergey21000/llama-cpp-python-wheels/releases)
 
 
