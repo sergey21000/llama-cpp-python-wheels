@@ -19,22 +19,22 @@ All available wheels can be found in the [Releases](https://github.com/sergey210
 
 Linux x86_64 / Python 3.11 / CPU (Google Colab)
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.cpu.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl
 ```
 
 Linux x86_64 / Python 3.11 / CUDA (Google Colab)
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.cuda.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.cu125.whl
 ```
 
 Windows amd64 / Python 3.12 / CPU
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.cpu.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.whl
 ```
 
 Windows amd64 / Python 3.12 / CUDA
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.cuda.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.cu128.whl
 ```
 
 Linux aarch64 / Python 3.10 (Android, Ubuntu 22.04)
