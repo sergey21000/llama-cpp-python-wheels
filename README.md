@@ -19,7 +19,7 @@ Linux x86_64 / Python 3.11 / CPU (Google Colab, Ubuntu 22.04)
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl
 ```
 
-Linux x86_64 / Python 3.11 / CUDA (Google Colab, Ubuntu 22.04)
+Linux x86_64 / Python 3.11 / CUDA 12.5 (Google Colab, Ubuntu 22.04)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.cu125.whl
 ```
@@ -29,14 +29,9 @@ Linux x86_64 / Python 3.12 / CPU (WSL, Ubuntu 24.04)
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-linux_x86_64.whl
 ```
 
-Windows amd64 / Python 3.12 / CPU
+Linux x86_64 / Python 3.12 / CUDA 12.9 (WSL, Ubuntu 24.04)
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.whl
-```
-
-Windows amd64 / Python 3.12 / CUDA
-```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.cu128.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-linux_x86_64.cu129.whl
 ```
 
 Linux aarch64 / Python 3.10 (Android, Ubuntu 22.04)
@@ -47,6 +42,16 @@ pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/down
 Linux aarch64 / Python 3.12 (Android, Termux)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-linux_aarch64.whl
+```
+
+Windows amd64 / Python 3.12 / CPU
+```
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.whl
+```
+
+Windows amd64 / Python 3.12 / CUDA 12.8
+```
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.cu128.whl
 ```
 
 
