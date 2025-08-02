@@ -6,14 +6,11 @@
 <a href="https://colab.research.google.com/drive/1OUVAO8T_HaYW0zxYDkzGja-2sD3elhJp"><img src="https://img.shields.io/static/v1?message=Open%20in%20Colab&logo=googlecolab&labelColor=5c5c5c&color=0f80c1&label=%20" alt="Open in Colab"></a>
 </div>
 
-Pre-built wheels for [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) which were built on the following OS:
-- Linux x86_64 (Ubuntu 22.04) / Python 3.11 / CPU / CUDA (12.5) (Google Colab)
-- Linux aarch64 (Ubuntu 22.04) / Python 3.10 (Android)
-- Linux aarch64 (Termux) / Python 3.12 (Android)
-- Windows 10 / Python 3.12 / CPU / CUDA (12.8)
-
-All available wheels can be found in the [Releases](https://github.com/sergey21000/llama-cpp-python-wheels/releases)
-
+Pre-built wheels for [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)  
+To install the package, copy the wheel file's URL from the [Releases](https://github.com/sergey21000/llama-cpp-python-wheels/releases) page and run:
+```
+pip install PASTE_THE_COPIED_URL_HERE
+```
 
 # Installation Examples
 
