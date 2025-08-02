@@ -14,14 +14,19 @@ pip install PASTE_THE_COPIED_URL_HERE
 
 # Installation Examples
 
-Linux x86_64 / Python 3.11 / CPU (Google Colab)
+Linux x86_64 / Python 3.11 / CPU (Google Colab, Ubuntu 22.04)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl
 ```
 
-Linux x86_64 / Python 3.11 / CUDA (Google Colab)
+Linux x86_64 / Python 3.11 / CUDA (Google Colab, Ubuntu 22.04)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.cu125.whl
+```
+
+Linux x86_64 / Python 3.12 / CPU (WSL, Ubuntu 24.04)
+```
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-linux_x86_64.whl
 ```
 
 Windows amd64 / Python 3.12 / CPU
