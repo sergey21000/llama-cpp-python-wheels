@@ -14,6 +14,13 @@ pip install PASTE_THE_COPIED_URL_HERE
 
 # Installation Examples
 
+> [!NOTE]
+> If `import llama_cpp` returns an error `Failed to load shared library: libgomp.so.1`, then you need to install the library
+> ```
+> sudo apt-get update
+> sudo apt-get install libgomp1
+> ```
+
 Linux x86_64 / Python 3.11 / CPU (Google Colab, Ubuntu 22.04)
 ```
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl
