@@ -15,6 +15,12 @@ jobs:
         python-version: ["3.11", "3.12"]
 
     steps:
+      - name: Clone source code
+        run: |
+          git clone --depth 1 --branch main https://github.com/abetlen/llama-cpp-python.git .
+          git submodule update --init --recursive
+        shell: bash
+
       - uses: actions/checkout@v4
         with:
           submodules: "recursive"
