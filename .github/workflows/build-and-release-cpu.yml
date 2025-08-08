@@ -11,44 +11,35 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-2022]
+        os: [ubuntu-22.04, windows-2022]  # ubuntu-24.04 пока недоступен
         python-version: ["3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: "recursive"
+      # Клонируем llama-cpp-python вместо использования checkout
+      - name: Clone llama-cpp-python
+        run: |
+          git clone --depth 1 --branch main https://github.com/abetlen/llama-cpp-python.git
+          git submodule update --init --recursive
+          cd llama-cpp-python
+        shell: bash
 
-      # Used to host cibuildwheel
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies (Linux)
-        if: runner.os != 'Windows'
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install uv
-          RUST_LOG=trace python -m uv pip install -e .[all] --verbose
-        shell: bash
-
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        env:
-          RUST_LOG: trace        
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install uv
           python -m uv pip install -e .[all] --verbose
-        shell: cmd
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.22.0
         env:
-          # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
+          CIBW_BUILD: "cp311-* cp312-*"  # Только Python 3.11 и 3.12
         with:
-          package-dir: .
+          package-dir: .  # Исходники уже в корне
           output-dir: wheelhouse
 
       - uses: actions/upload-artifact@v4
@@ -56,51 +47,9 @@ jobs:
           name: wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
-  build_sdist:
-    name: Build source distribution
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: "recursive"
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies (Linux)
-        if: runner.os != 'Windows'
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install uv
-          RUST_LOG=trace python -m uv pip install -e .[all] --verbose
-          python -m uv pip install build
-        shell: bash
-
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        env:
-          RUST_LOG: trace        
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install uv
-          python -m uv pip install -e .[all] --verbose
-          python -m uv pip install build
-        shell: cmd
-
-      - name: Build source distribution
-        run: |
-          python -m build --sdist
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: sdist
-          path: ./dist/*.tar.gz
-
   release:
     name: Release
-    needs: [build_wheels, build_sdist]
+    needs: [build_wheels]
     runs-on: ubuntu-latest
 
     steps:
