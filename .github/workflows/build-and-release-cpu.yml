@@ -30,7 +30,7 @@ jobs:
           CIBW_ARCHS_LINUX: "x86_64"
           CIBW_SKIP: pp*
           CIBW_ENVIRONMENT_LINUX: >
-            CMAKE_ARGS="-DLLAMA_STATIC=ON -DBUILD_SHARED_LIBS=OFF -DLLAMA_BUILD_SHARED_LIB=OFF"
+            CMAKE_ARGS="-DBUILD_SHARED_LIBS=OFF -DLLAMA_STATIC=ON -DGGML_STATIC=ON -DGGML_SHARED=OFF"
           CIBW_MANYLINUX_X86_64: manylinux_2_28
         with:
           package-dir: .
