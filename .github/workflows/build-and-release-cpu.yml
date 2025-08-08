@@ -14,15 +14,16 @@ jobs:
         os: [ubuntu-24.04, windows-2022]
 
     steps:
-      # - uses: actions/checkout@v4
-
-      - name: Clone llama-cpp-python
-        run: |
-          git clone --branch main https://github.com/abetlen/llama-cpp-python.git .
-          git submodule update --init --recursive
-        shell: bash
-
-      - uses: actions/setup-python@v5
+      - name: Checkout llama-cpp-python
+        uses: actions/checkout@v4
+        with:
+          repository: abetlen/llama-cpp-python
+          path: .
+          ref: main
+          submodules: recursive
+          
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -37,8 +38,8 @@ jobs:
         env:
           CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_BUILD: "cp311-* cp312-*"
-          CIBW_ARCHS_WINDOWS: "AMD64"     # Правильное название для 64-битной Windows
-          CIBW_ARCHS_LINUX: "x86_64"      # Для Linux x86_64
+          CIBW_ARCHS_WINDOWS: "AMD64"
+          CIBW_ARCHS_LINUX: "x86_64"
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -54,14 +55,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4
         with:
           merge-multiple: true
           path: dist
 
-      - uses: softprops/action-gh-release@v2
+      - name: Extract version from wheel
+        id: extract_version
+        run: |
+          WHEEL_NAME=$(ls dist/*.whl | head -n 1)
+          VERSION=$(echo "$WHEEL_NAME" | grep -oP 'llama_cpp_python-\K\d+\.\d+\.\d+')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Release wheels
+        uses: softprops/action-gh-release@v2
         with:
           files: dist/*
-          tag_name: ${{ github.ref_name }}-cpu
+          tag_name: v${{ steps.extract_version.outputs.version }}-cpu
+          name: "llama-cpp-python ${{ steps.extract_version.outputs.version }} (CPU)"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
