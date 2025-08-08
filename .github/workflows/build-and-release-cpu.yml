@@ -19,8 +19,8 @@ jobs:
 
       - name: Clone llama-cpp-python
         run: |
-          git clone --depth 1 --branch main https://github.com/abetlen/llama-cpp-python.git
-          cd llama-cpp-python
+          git clone --branch main https://github.com/abetlen/llama-cpp-python.git llama_src
+          cd llama_src
           git submodule update --init --recursive
         shell: bash
 
