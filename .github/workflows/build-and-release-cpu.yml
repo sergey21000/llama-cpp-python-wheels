@@ -40,7 +40,9 @@ jobs:
           CIBW_BUILD: "cp311-* cp312-*"
           CIBW_ARCHS_WINDOWS: "AMD64"
           CIBW_ARCHS_LINUX: "x86_64"
-          CIBW_ENVIRONMENT: "MANYLINUX_IMAGE=manylinux_2_27_x86_64"
+          CIBW_SKIP: pp*
+          CIBW_ENVIRONMENT_LINUX: >
+            CMAKE_ARGS="-DLLAMA_STATIC=ON -DBUILD_SHARED_LIBS=OFF"
         with:
           package-dir: .
           output-dir: wheelhouse
