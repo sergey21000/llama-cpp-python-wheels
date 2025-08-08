@@ -11,21 +11,22 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-2022]
+        os: [ubuntu-22.04, windows-2022]
         python-version: ["3.11", "3.12"]
 
     steps:
-      - name: Clone source code
+      - uses: actions/checkout@v4  # Важно: оставляем пустой репозиторий
+
+      - name: Clone llama-cpp-python
         run: |
-          git clone --depth 1 --branch main https://github.com/abetlen/llama-cpp-python.git .
+          git clone --depth 1 --branch main https://github.com/abetlen/llama-cpp-python.git llama_src
+          cd llama_src
           git submodule update --init --recursive
+          ls -la  # Проверяем наличие pyproject.toml
         shell: bash
 
-      - uses: actions/checkout@v4
-        with:
-          submodules: "recursive"
-
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -39,7 +40,7 @@ jobs:
         env:
           CIBW_REPAIR_WHEEL_COMMAND: ""
         with:
-          package-dir: .
+          package-dir: llama_src  # Указываем явно путь к исходникам
           output-dir: wheelhouse
 
       - uses: actions/upload-artifact@v4
@@ -48,10 +49,8 @@ jobs:
           path: ./wheelhouse/*.whl
 
   release:
-    name: Release
     needs: [build_wheels]
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/download-artifact@v4
         with:
