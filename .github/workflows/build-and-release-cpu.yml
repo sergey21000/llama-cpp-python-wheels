@@ -33,17 +33,14 @@ jobs:
           python -m pip install uv
           python -m uv pip install -e .[all] --verbose
 
-      - name: Build wheels
+      - name: Build wheels with glibc
         uses: pypa/cibuildwheel@v2.22.0
         env:
           CIBW_BUILD: "cp311-* cp312-*"
-          CIBW_ARCHS_LINUX: "x86_64"
-          CIBW_ENVIRONMENT_LINUX: |
-            GGML_STATIC=1
-            CMAKE_ARGS="-DLLAMA_STATIC=ON -DBUILD_SHARED_LIBS=OFF"
-          CIBW_REPAIR_WHEEL_COMMAND: ""
-          CIBW_BEFORE_BUILD_LINUX: |
-            yum install -y libstdc++-static || true
+          CIBW_PLATFORM: "linux"
+          CIBW_MANYLINUX_X86_64_IMAGE: "manylinux_2_27_x86_64"
+          CIBW_ENVIRONMENT: "AUDITWHEEL_PLAT=manylinux_2_27_x86_64"
+          CIBW_BEFORE_ALL_LINUX: "yum install -y libstdc++-static || apt-get install -y libstdc++6"
         with:
           package-dir: .
           output-dir: wheelhouse
