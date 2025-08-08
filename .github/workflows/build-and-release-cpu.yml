@@ -43,7 +43,7 @@ jobs:
             CMAKE_ARGS="-DLLAMA_STATIC=ON -DLLAMA_LTO=ON"
             AUDITWHEEL_PLAT=manylinux_2_27_x86_64
           CIBW_BEFORE_BUILD_LINUX: |
-            apt-get update && apt-get install -y libstdc++6
+            yum install -y libstdc++-static || true
         with:
           package-dir: .
           output-dir: wheelhouse
