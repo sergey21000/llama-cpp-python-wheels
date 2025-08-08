@@ -1,4 +1,4 @@
-name: Build and Release Wheels (CPU)
+name: Build and Release Wheels (glibc)
 
 on: workflow_dispatch
 
@@ -8,10 +8,7 @@ permissions:
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-24.04, windows-2022]
+    runs-on: ubuntu-24.04  # Только Linux для glibc сборки
 
     steps:
       - name: Checkout llama-cpp-python
@@ -38,16 +35,21 @@ jobs:
         env:
           CIBW_BUILD: "cp311-* cp312-*"
           CIBW_PLATFORM: "linux"
-          CIBW_MANYLINUX_X86_64_IMAGE: "manylinux2014_x86_64"  # Используем официальный образ
+          # Явно указываем manylinux2014 (glibc-based)
+          CIBW_MANYLINUX_X86_64_IMAGE: "quay.io/pypa/manylinux2014_x86_64"
           CIBW_ENVIRONMENT: "AUDITWHEEL_PLAT=manylinux2014_x86_64"
-          CIBW_BEFORE_ALL_LINUX: "yum install -y libstdc++-static || apt-get install -y libstdc++6"
+          # Отключаем musllinux сборку
+          CIBW_SKIP: "musllinux_*"
+          # Дополнительные зависимости
+          CIBW_BEFORE_ALL_LINUX: |
+            yum install -y libstdc++-static || apt-get install -y libstdc++6
         with:
           package-dir: .
           output-dir: wheelhouse
 
       - uses: actions/upload-artifact@v4
         with:
-          name: wheels-${{ matrix.os }}
+          name: wheels-glibc
           path: ./wheelhouse/*.whl
 
   release:
@@ -59,7 +61,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          merge-multiple: true
+          name: wheels-glibc
           path: dist
 
       - name: Extract version from wheel
@@ -73,6 +75,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
-          tag_name: v${{ steps.extract_version.outputs.version }}-cpu
+          tag_name: v${{ steps.extract_version.outputs.version }}-glibc
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
