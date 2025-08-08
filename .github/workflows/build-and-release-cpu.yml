@@ -37,9 +37,10 @@ jobs:
         uses: pypa/cibuildwheel@v2.22.0
         env:
           CIBW_REPAIR_WHEEL_COMMAND: ""
-          CIBW_BUILD: "cp311-* cp312-*"  # Только Python 3.11 и 3.12
+          CIBW_BUILD: "cp311-* cp312-*"
+          CIBW_ARCHS: "x86_64"           # Только 64-битные сборки
         with:
-          package-dir: .  # Исходники уже в корне
+          package-dir: .
           output-dir: wheelhouse
 
       - uses: actions/upload-artifact@v4
