@@ -40,6 +40,7 @@ jobs:
           CIBW_BUILD: "cp311-* cp312-*"
           CIBW_ARCHS_WINDOWS: "AMD64"
           CIBW_ARCHS_LINUX: "x86_64"
+          CIBW_ENVIRONMENT: "MANYLINUX_IMAGE=manylinux_2_27_x86_64"
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -72,7 +73,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
-          tag_name: v${{ steps.extract_version.outputs.version }}-cpu
-          name: "llama-cpp-python ${{ steps.extract_version.outputs.version }} (CPU)"
+          tag_name: "llama-cpp-python ${{ steps.extract_version.outputs.version }} (CPU)"
+          name: v${{ steps.extract_version.outputs.version }}-cpu
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
