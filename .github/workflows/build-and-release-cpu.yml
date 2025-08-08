@@ -15,7 +15,8 @@ jobs:
         python-version: ["3.11", "3.12"]
 
     steps:
-      # Клонируем llama-cpp-python вместо использования checkout
+      - uses: actions/checkout@v4
+
       - name: Clone llama-cpp-python
         run: |
           git clone --depth 1 --branch main https://github.com/abetlen/llama-cpp-python.git
