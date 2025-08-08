@@ -40,8 +40,8 @@ jobs:
           CIBW_ARCHS_LINUX: "x86_64"
           CIBW_ENVIRONMENT_LINUX: |
             GGML_STATIC=1
-            CMAKE_ARGS="-DLLAMA_STATIC=ON -DLLAMA_LTO=ON"
-            AUDITWHEEL_PLAT=manylinux_2_27_x86_64
+            CMAKE_ARGS="-DLLAMA_STATIC=ON -DBUILD_SHARED_LIBS=OFF"
+          CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_BEFORE_BUILD_LINUX: |
             yum install -y libstdc++-static || true
         with:
