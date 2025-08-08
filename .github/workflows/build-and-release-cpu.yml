@@ -21,28 +21,17 @@ jobs:
           path: .
           ref: main
           submodules: recursive
-          
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install uv
-          python -m uv pip install -e .[all] --verbose
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.22.0
         env:
-          CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_BUILD: "cp311-* cp312-*"
           CIBW_ARCHS_WINDOWS: "AMD64"
           CIBW_ARCHS_LINUX: "x86_64"
           CIBW_SKIP: pp*
           CIBW_ENVIRONMENT_LINUX: >
             CMAKE_ARGS="-DLLAMA_STATIC=ON -DBUILD_SHARED_LIBS=OFF"
+          CIBW_MANYLINUX_X86_64: manylinux_2_28
         with:
           package-dir: .
           output-dir: wheelhouse
