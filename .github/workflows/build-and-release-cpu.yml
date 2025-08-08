@@ -11,16 +11,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-2022]  # ubuntu-24.04 пока недоступен
+        os: [ubuntu-24.04, windows-2022]
         python-version: ["3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4
+      # - uses: actions/checkout@v4
 
       - name: Clone llama-cpp-python
         run: |
-          git clone --branch main https://github.com/abetlen/llama-cpp-python.git llama_src
-          cd llama_src
+          git clone --branch main https://github.com/abetlen/llama-cpp-python.git .
           git submodule update --init --recursive
         shell: bash
 
