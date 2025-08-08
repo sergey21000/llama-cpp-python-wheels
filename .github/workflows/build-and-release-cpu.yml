@@ -38,8 +38,8 @@ jobs:
         env:
           CIBW_BUILD: "cp311-* cp312-*"
           CIBW_PLATFORM: "linux"
-          CIBW_MANYLINUX_X86_64_IMAGE: "manylinux_2_27_x86_64"
-          CIBW_ENVIRONMENT: "AUDITWHEEL_PLAT=manylinux_2_27_x86_64"
+          CIBW_MANYLINUX_X86_64_IMAGE: "manylinux2014_x86_64"  # Используем официальный образ
+          CIBW_ENVIRONMENT: "AUDITWHEEL_PLAT=manylinux2014_x86_64"
           CIBW_BEFORE_ALL_LINUX: "yum install -y libstdc++-static || apt-get install -y libstdc++6"
         with:
           package-dir: .
