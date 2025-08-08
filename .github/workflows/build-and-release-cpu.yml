@@ -38,7 +38,8 @@ jobs:
         env:
           CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_BUILD: "cp311-* cp312-*"
-          CIBW_ARCHS: "x86_64"           # Только 64-битные сборки
+          CIBW_ARCHS_WINDOWS: "AMD64"     # Правильное название для 64-битной Windows
+          CIBW_ARCHS_LINUX: "x86_64"      # Для Linux x86_64
         with:
           package-dir: .
           output-dir: wheelhouse
