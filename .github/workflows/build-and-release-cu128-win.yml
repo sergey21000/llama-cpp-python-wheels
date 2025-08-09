@@ -78,9 +78,6 @@ jobs:
 
       - name: Build Wheel
         run: |
-          # $cupath = 'CUDA_PATH_V' + $env:CUDAVER.Remove($env:CUDAVER.LastIndexOf('.')).Replace('.','_')
-          # echo "$cupath=$env:CONDA_PREFIX" >> $env:GITHUB_ENV
-          
           $cudaVersion = $env:CUDAVER.Remove($env:CUDAVER.LastIndexOf('.')).Replace('.','')
           # $env:CUDA_PATH = $env:CONDA_PREFIX
           $env:CUDA_HOME = $env:CUDA_PATH
@@ -105,9 +102,8 @@ jobs:
           # $env:CMAKE_ARGS = $env:CMAKE_ARGS + ' -DGGML_AVX=off -DGGML_AVX2=off -DGGML_FMA=off -DGGML_F16C=off'
           # }
           python -m build --wheel
-          # write the build tag to the output
+
           Write-Output "CUDA_VERSION=$cudaVersion" >> $env:GITHUB_ENV
-          
           $wheel = (gi '.\dist\*.whl')[0]
           $tagVer = $wheel.name.split('-')[1]
           Write-Output "TAG_VERSION=$tagVer" >> $env:GITHUB_ENV
