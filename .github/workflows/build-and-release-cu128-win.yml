@@ -43,9 +43,6 @@ jobs:
       CUDAVER: ${{ matrix.cuda }}
       AVXVER: ${{ matrix.releasetag }}
       CUDAARCHVER: ${{ matrix.cudaarch }}
-      # https://cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html
-      # https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/#gpu-feature-list
-      # e.g. "all" "89"
 
     steps:
       - name: Add MSBuild to PATH
@@ -61,14 +58,12 @@ jobs:
           ref: main
           submodules: recursive
       
-      # from kingbri1/flash-attention build-wheels.yml
       - name: Install CUDA ${{ matrix.cuda }}
-        uses: Jimver/cuda-toolkit@v0.2.9
+        uses: Jimver/cuda-toolkit@v0.2.23
         id: cuda-toolkit
         with:
           cuda: "${{ matrix.cuda }}"
 
-      # from astral-sh/setup-uv
       - name: Install the latest version of uv and set the python version
         uses: astral-sh/setup-uv@v6
         with:
@@ -117,7 +112,7 @@ jobs:
           $tagVer = $wheel.name.split('-')[1]
           Write-Output "TAG_VERSION=$tagVer" >> $env:GITHUB_ENV
 
-      - uses: softprops/action-gh-release@v2.2.2
+      - uses: softprops/action-gh-release@v2.3.2
         with:
           files: dist/*
           tag_name: v${{ env.TAG_VERSION }}-cu${{ env.CUDA_VERSION }}-${{ env.AVXVER }}-win
