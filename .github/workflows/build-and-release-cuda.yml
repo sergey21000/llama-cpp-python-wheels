@@ -1,0 +1,94 @@
+name: Build and Release Wheels (CUDA)
+
+on: workflow_dispatch
+
+permissions:
+  contents: write
+
+jobs:
+  build_wheels:
+    name: Build CUDA Wheel ${{ matrix.os }} ${{ matrix.pyver }} ${{ matrix.cuda }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+        pyver: ["3.11", "3.12"]
+        cuda: ["12.4.1", "12.9.0"]
+        include:
+          - os: ubuntu-24.04
+            cuda_toolkit: "nvidia/label/cuda-12.4.1"
+          - os: windows-2022
+            cuda_toolkit: "nvidia/label/cuda-12.9.0"
+
+    steps:
+      - name: Checkout llama-cpp-python
+        uses: actions/checkout@v4
+        with:
+          repository: abetlen/llama-cpp-python
+          path: .
+          ref: main
+          submodules: recursive
+
+      - name: Add MSBuild to PATH (Windows)
+        if: runner.os == 'Windows'
+        uses: microsoft/setup-msbuild@v2
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.pyver }}
+
+      - name: Install CUDA Toolkit
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-variant: Mambaforge
+          use-mamba: true
+          channels: nvidia,conda-forge
+          channel-priority: strict
+        env:
+          CONDA_ADD_PIP_AS_PYTHON_DEPENDENCY: "true"
+
+      - name: Install CUDA dependencies
+        run: |
+          mamba install -y "cuda-toolkit=${{ matrix.cuda }}" -c ${{ matrix.cuda_toolkit }}
+          pip install setuptools wheel cmake scikit-build
+
+      - name: Build with CUDA
+        env:
+          CMAKE_ARGS: "-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=all"
+          CUDA_HOME: ${{ runner.tool_cache }}/cuda
+        run: |
+          python setup.py bdist_wheel
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cuda-${{ matrix.cuda }}-wheel-${{ matrix.os }}-py${{ matrix.pyver }}
+          path: dist/*.whl
+
+  release:
+    needs: [build_wheels]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          path: dist
+
+      - name: Extract version from wheel
+        id: extract_version
+        run: |
+          WHEEL_NAME=$(ls dist/*.whl | head -n 1)
+          VERSION=$(echo "$WHEEL_NAME" | grep -oP 'llama_cpp_python-\K\d+\.\d+\.\d+')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Release wheels
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          tag_name: v${{ steps.extract_version.outputs.version }}-cuda
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
