@@ -126,18 +126,16 @@ jobs:
           python -m build --wheel
           # write the build tag to the output
           Write-Output "CUDA_VERSION=$cudaVersion" >> $env:GITHUB_ENV
-
-      - name: Extract version from wheel
-        id: extract_version
-        run: |
-          WHEEL_NAME=$(ls dist/*.whl | head -n 1)
-          VERSION=$(echo "$WHEEL_NAME" | grep -oP 'llama_cpp_python-\K\d+\.\d+\.\d+')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+          $wheel = (gi '.\dist\*.whl')[0]
+          $tagVer = $wheel.name.split('-')[1]
+          Write-Output "TAG_VERSION=$tagVer" >> $env:GITHUB_ENV
+          
           
       - name: Release wheels
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
-          tag_name: v${{ steps.extract_version.outputs.version }}-cu${{ env.CUDA_VERSION }}
+          tag_name: v${{ env.TAG_VERSION }}-cu${{ env.CUDA_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
