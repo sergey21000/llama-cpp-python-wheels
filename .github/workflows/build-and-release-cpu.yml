@@ -65,9 +65,8 @@ jobs:
       - name: Extract version from wheel
         id: extract_version
         run: |
-          WHEEL_NAME=$(ls dist/*.whl | head -n 1)
-          VERSION=$(echo "$WHEEL_NAME" | grep -oP 'llama_cpp_python-\K\d+\.\d+\.\d+')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          python -c "from glob import glob; \
+          print(glob('dist/*.whl')[0].split('-')[1])" >> $GITHUB_OUTPUT
           
       - name: Release wheels
         uses: softprops/action-gh-release@v2
