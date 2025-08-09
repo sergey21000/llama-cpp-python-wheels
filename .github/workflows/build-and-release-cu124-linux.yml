@@ -24,6 +24,7 @@ jobs:
               'pyver' = @("3.11", "3.12")
               'cuda' = @("12.4.1")
               'releasetag' = @("basic")  # AVX, AVX2, AVX512, basic
+              'cudaarch' = @("75;80;86;89;90")  # 75;80;86;89;90, all
           }
           $matrixOut = ConvertTo-Json $matrix -Compress
           Write-Output ('matrix=' + $matrixOut) >> $env:GITHUB_OUTPUT
@@ -40,6 +41,7 @@ jobs:
     env:
       CUDAVER: ${{ matrix.cuda }}
       AVXVER: ${{ matrix.releasetag }}
+      CUDAARCHVER: ${{ matrix.cudaarch }}
 
     steps:
       - name: Checkout llama-cpp-python
@@ -82,7 +84,7 @@ jobs:
             $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:LD_LIBRARY_PATH
           }
           $env:VERBOSE = '1'
-          $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all'
+          $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=' + $env:CUDAARCHVER
           $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON $env:CMAKE_ARGS"
           # if ($env:AVXVER -eq 'AVX') {
           # $env:CMAKE_ARGS = $env:CMAKE_ARGS + ' -DGGML_AVX2=off -DGGML_FMA=off -DGGML_F16C=off'
