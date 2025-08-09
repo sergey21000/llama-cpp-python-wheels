@@ -7,8 +7,8 @@ permissions:
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ubuntu-24.04  # Только Linux для glibc сборки
+    name: Build wheels
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout llama-cpp-python
@@ -19,15 +19,21 @@ jobs:
           ref: main
           submodules: recursive
           
+      - name: Clean any existing build files
+        run: |
+          rm -rf build/ dist/ *.so *.egg-info
+          find . -name "*.so" -delete
+          find . -name "*.o" -delete
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install uv
+          python -m pip install uv wheel
           python -m uv pip install -e .[all] --verbose
 
       - name: Build wheels with glibc
@@ -35,14 +41,14 @@ jobs:
         env:
           CIBW_BUILD: "cp311-* cp312-*"
           CIBW_PLATFORM: "linux"
-          # Явно указываем manylinux2014 (glibc-based)
           CIBW_MANYLINUX_X86_64_IMAGE: "quay.io/pypa/manylinux2014_x86_64"
-          CIBW_ENVIRONMENT: "AUDITWHEEL_PLAT=manylinux2014_x86_64"
-          # Отключаем musllinux сборку
+          CIBW_ENVIRONMENT: "LLAMA_BUILD_SERVER=0 AUDITWHEEL_PLAT=manylinux2014_x86_64"
           CIBW_SKIP: "musllinux_*"
-          # Дополнительные зависимости
-          CIBW_BEFORE_ALL_LINUX: |
-            yum install -y libstdc++-static || apt-get install -y libstdc++6
+          CIBW_BEFORE_BUILD: "pip install -r requirements.txt"
+          CIBW_BEFORE_ALL: "yum install -y libstdc++-static || apt-get install -y libstdc++6"
+          CIBW_REPAIR_WHEEL_COMMAND: >
+            auditwheel repair --plat manylinux2014_x86_64 -w {dest_dir} {wheel} ||
+            echo "Warning: auditwheel repair failed, but continuing anyway"
         with:
           package-dir: .
           output-dir: wheelhouse
