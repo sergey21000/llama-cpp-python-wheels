@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-2022]
+        os: [ubuntu-24.04]
 
     steps:
       - name: Checkout llama-cpp-python
@@ -66,12 +66,12 @@ jobs:
         id: extract_version
         run: |
           python -c "from glob import glob; \
-          print(glob('dist/*.whl')[0].split('-')[1])" >> $GITHUB_OUTPUT
+          print('TAG_VERSION=' + glob('dist/*.whl')[0].split('-')[1])" >> $GITHUB_OUTPUT
           
       - name: Release wheels
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
-          tag_name: v${{ steps.extract_version.outputs.version }}-cpu
+          tag_name: v${{ steps.extract_version.outputs.TAG_VERSION }}-cpu
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
