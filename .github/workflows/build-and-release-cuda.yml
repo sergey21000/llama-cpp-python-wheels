@@ -6,19 +6,40 @@ permissions:
   contents: write
 
 jobs:
+  define_matrix:
+    name: Define Build Matrix
+    runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Define Job Output
+        id: set-matrix
+        run: |
+          $matrix = @{
+              'os' = @('ubuntu-22.04') #, 'windows-2022')
+              'pyver' = @("3.11", "3.12")
+              'cuda' = @("12.4.1", "12.9.1")
+              'releasetag' = @("basic")
+          }
+          $matrixOut = ConvertTo-Json $matrix -Compress
+          Write-Output ('matrix=' + $matrixOut) >> $env:GITHUB_OUTPUT
+
   build_wheels:
-    name: Build CUDA Wheel ${{ matrix.os }} ${{ matrix.pyver }} ${{ matrix.cuda }}
+    name: Build Wheel ${{ matrix.os }} ${{ matrix.pyver }} ${{ matrix.cuda }} ${{ matrix.releasetag == 'wheels' && 'AVX2' || matrix.releasetag }}
+    needs: define_matrix
     runs-on: ${{ matrix.os }}
     strategy:
-      matrix:
-        os: [ubuntu-24.04, windows-2022]
-        pyver: ["3.11", "3.12"]
-        cuda: ["12.4.1", "12.9.0"]
-        include:
-          - os: ubuntu-24.04
-            cuda_toolkit: "nvidia/label/cuda-12.4.1"
-          - os: windows-2022
-            cuda_toolkit: "nvidia/label/cuda-12.9.0"
+      matrix: ${{ fromJSON(needs.define_matrix.outputs.matrix) }}
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      CUDAVER: ${{ matrix.cuda }}
+      AVXVER: ${{ matrix.releasetag }}
 
     steps:
       - name: Checkout llama-cpp-python
