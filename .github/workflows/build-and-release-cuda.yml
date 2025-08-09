@@ -1,4 +1,4 @@
-name: Build and Release Wheels (CUDA)
+name: Build and Release Wheels (CUDA Linux)
 
 on: workflow_dispatch
 
