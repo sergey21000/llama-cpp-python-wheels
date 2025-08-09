@@ -112,7 +112,7 @@ jobs:
           $tagVer = $wheel.name.split('-')[1]
           Write-Output "TAG_VERSION=$tagVer" >> $env:GITHUB_ENV
 
-      - uses: softprops/action-gh-release@v2.3.2
+      - uses: softprops/action-gh-release@v2
         with:
           files: dist/*
           tag_name: v${{ env.TAG_VERSION }}-cu${{ env.CUDA_VERSION }}-${{ env.AVXVER }}-win
