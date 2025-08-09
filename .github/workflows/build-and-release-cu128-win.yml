@@ -1,5 +1,4 @@
-# https://github.com/JamePeng/llama-cpp-python/blob/main/.github/workflows/build-wheels-cuda-win.yml
-name: Build and Release Wheels (CUDA 12.9 Windows)
+name: Build and Release Wheels (CUDA 12.8 Windows)
 
 on:
   workflow_dispatch:
@@ -24,7 +23,7 @@ jobs:
           $matrix = @{
               'os' = @('windows-2022')
               'pyver' = @("3.11", "3.12")
-              'cuda' = @("12.9.1")
+              'cuda' = @("12.8.1")
               'releasetag' = @("AVX2")
               'cudaarch' = @("all")
           }
