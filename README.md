@@ -69,7 +69,6 @@ The `.whl` file will be compiled for the architecture of the current GPU, if you
 2) (Optional) Saving the `.whl` file to Google Drive for convenience (after mounting the drive)
 ```python
 import shutil
-
 src_wheel_file = 'wheel_dir/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl'
 trg_wheel_file = '/content/drive/MyDrive/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl'
 shutil.copyfile(src_wheel_file, trg_wheel_file)
@@ -109,7 +108,7 @@ Instead of `pip wheel` you can use `pip install` to install the library right aw
 
 ## Example: Building llama-cpp-python on Android
 
-Build the latest version of `llama-cpp-python` on Termux (Android, aarch64)
+Build the latest version of `llama-cpp-python` on Termux (Android, aarch64), taken from this [comment](https://github.com/abetlen/llama-cpp-python/issues/389#issuecomment-1913374996)
 ```sh
 pkg update && pkg upgrade 
 pkg install libexpat openssl python-pip python-cryptography cmake ninja autoconf automake libandroid-execinfo patchelf
@@ -119,6 +118,3 @@ pip wheel --no-deps --no-cache-dir --wheel-dir=wheel_dir llama-cpp-python
 # or command to install
 pip install llama-cpp-python
 ```
-
-Source:  
-https://github.com/abetlen/llama-cpp-python/issues/389#issuecomment-1913374996
