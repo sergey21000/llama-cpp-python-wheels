@@ -21,44 +21,34 @@ pip install PASTE_THE_COPIED_URL_HERE
 > sudo apt-get install libgomp1
 > ```
 
-Linux x86_64 / Python 3.11 / CPU (Google Colab, Ubuntu 22.04)
+Linux x86_64 / Python 3.11 / CPU (Google Colab)
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl
-```
-
-Linux x86_64 / Python 3.11 / CUDA 12.5 (Google Colab, Ubuntu 22.04)
-```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.cu125.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cpu/llama_cpp_python-0.3.15-cp311-cp311-linux_x86_64.whl
 ```
 
-Linux x86_64 / Python 3.12 / CPU (WSL, Ubuntu 24.04)
+Linux x86_64 / Python 3.11 / CUDA 12.4 (Google Colab)
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-linux_x86_64.whl
-```
-
-Linux x86_64 / Python 3.12 / CUDA 12.9 (WSL, Ubuntu 24.04)
-```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-linux_x86_64.cu129.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cu124/llama_cpp_python-0.3.15-cp311-cp311-linux_x86_64.whl
 ```
 
-Linux aarch64 / Python 3.10 (Android, Ubuntu 22.04)
+Linux x86_64 / Python 3.12 / CPU 
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp310-cp310-linux_aarch64.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cpu/llama_cpp_python-0.3.15-cp312-cp312-linux_x86_64.whl
 ```
 
-Linux aarch64 / Python 3.12 (Android, Termux)
+Linux x86_64 / Python 3.12 / CUDA 12.4 
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-linux_aarch64.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cu124/llama_cpp_python-0.3.15-cp312-cp312-linux_x86_64.whl
 ```
 
 Windows amd64 / Python 3.12 / CPU
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cpu/llama_cpp_python-0.3.15-cp312-cp312-win_amd64.whl
 ```
 
 Windows amd64 / Python 3.12 / CUDA 12.8
 ```
-pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.14/llama_cpp_python-0.3.14-cp312-cp312-win_amd64.cu128.whl
+pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cu128-win/llama_cpp_python-0.3.15-cp312-cp312-win_amd64.whl
 ```
 
 
@@ -72,6 +62,10 @@ pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/down
 ```
 The build process takes about 30–40 minutes. Make sure that a GPU is enabled in your Colab environment.  
 Once completed, the `.whl` file will be located in the `wheel_dir` directory.
+The `.whl` file will be compiled for the architecture of the current GPU, if you need to compile with support for other architectures, you need to specify
+```
+!CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75;80;86;89;90" pip wheel --no-deps --wheel-dir=wheel_dir llama-cpp-python
+```
 
 2) (Optional) Saving the `.whl` file to Google Drive for convenience (after mounting the drive)
 ```python
@@ -102,6 +96,14 @@ $env:FORCE_CMAKE='1'; $env:CMAKE_ARGS='-DGGML_CUDA=on -DLLAMA_AVX=off -DLLAMA_AV
 pip wheel --no-deps --no-cache-dir --wheel-dir=wheel_dir llama-cpp-python
 ```
 
+Build for other CUDA architectures
+```
+$env:FORCE_CMAKE='1'; $env:CMAKE_ARGS='-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75;80;86;89;90'
+pip wheel --no-deps --no-cache-dir --wheel-dir=wheel_dir llama-cpp-python
+```
+
+Instead of `pip wheel` you can use `pip install` to install the library right away
+
 > [!NOTE]
 > To install `llama-cpp-python` on Windows with CUDA support, you must first install [Visual Studio 2022 Community](https://visualstudio.microsoft.com/ru/downloads/) and [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit-archive), as indicated in [this](https://github.com/abetlen/llama-cpp-python/discussions/871#discussion-5812096) or [this](https://github.com/Granddyser/windows-llama-cpp-python-cuda-guide?tab=readme-ov-file#12-visual-studio-2019-installation-and-configuration) instructions
 
@@ -112,7 +114,11 @@ Build the latest version of `llama-cpp-python` on Termux (Android, aarch64)
 ```
 pkg update && pkg upgrade 
 pkg install libexpat openssl python-pip python-cryptography cmake ninja autoconf automake libandroid-execinfo patchelf
+
+# command for build wheels
 pip wheel --no-deps --no-cache-dir --wheel-dir=wheel_dir llama-cpp-python
+# or command to install
+pip install llama-cpp-python
 ```
 
 Source:  
