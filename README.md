@@ -17,8 +17,7 @@ pip install PASTE_THE_COPIED_URL_HERE
 > [!NOTE]
 > If `import llama_cpp` returns an error `Failed to load shared library: libgomp.so.1`, then you need to install the library
 > ```
-> sudo apt-get update
-> sudo apt-get install libgomp1
+> sudo apt-get update && apt-get install -y libgomp1
 > ```
 
 Linux x86_64 / Python 3.11 / CPU (Google Colab)
