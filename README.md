@@ -56,13 +56,13 @@ pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/down
 ## Example: Building llama-cpp-python with CUDA support in Google Colab
 
 1) Build the latest version of `llama-cpp-python` with CUDA support into the `wheel_dir` directory
-```
+```sh
 !CMAKE_ARGS="-DGGML_CUDA=on" pip wheel --no-deps --wheel-dir=wheel_dir llama-cpp-python
 ```
 The build process takes about 30–40 minutes. Make sure that a GPU is enabled in your Colab environment.  
-Once completed, the `.whl` file will be located in the `wheel_dir` directory.
-The `.whl` file will be compiled for the architecture of the current GPU, if you need to compile with support for other architectures, you need to specify
-```
+Once completed, the `.whl` file will be located in the `wheel_dir` directory.  
+The `.whl` file will be compiled for the architecture of the current GPU, if you need to compile with support for other CUDA architectures, you need to specify
+```sh
 !CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75;80;86;89;90" pip wheel --no-deps --wheel-dir=wheel_dir llama-cpp-python
 ```
 
@@ -76,7 +76,7 @@ shutil.copyfile(src_wheel_file, trg_wheel_file)
 ```
 
 3) Installing from a saved wheel:
-```
+```sh
 !pip install wheel_dir/llama_cpp_python-0.3.14-cp311-cp311-linux_x86_64.whl
 ```
 
@@ -84,19 +84,19 @@ shutil.copyfile(src_wheel_file, trg_wheel_file)
 ## Example: Building llama-cpp-python on Windows with CUDA support
 
 Build the latest version of `llama-cpp-python` with CUDA support into the `wheel_dir` directory (Windows Powershell)
-```
+```powershell
 $env:FORCE_CMAKE='1'; $env:CMAKE_ARGS='-DGGML_CUDA=on'
 pip wheel --no-deps --no-cache-dir --wheel-dir=wheel_dir llama-cpp-python
 ```
 
 If `DLLAMA_AVX` or other instructions are not supported then you need to specify this
-```
+```powershell
 $env:FORCE_CMAKE='1'; $env:CMAKE_ARGS='-DGGML_CUDA=on -DLLAMA_AVX=off -DLLAMA_AVX2=off -DLLAMA_FMA=off'
 pip wheel --no-deps --no-cache-dir --wheel-dir=wheel_dir llama-cpp-python
 ```
 
 Build for other CUDA architectures
-```
+```powershell
 $env:FORCE_CMAKE='1'; $env:CMAKE_ARGS='-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=75;80;86;89;90'
 pip wheel --no-deps --no-cache-dir --wheel-dir=wheel_dir llama-cpp-python
 ```
@@ -110,7 +110,7 @@ Instead of `pip wheel` you can use `pip install` to install the library right aw
 ## Example: Building llama-cpp-python on Android
 
 Build the latest version of `llama-cpp-python` on Termux (Android, aarch64)
-```
+```sh
 pkg update && pkg upgrade 
 pkg install libexpat openssl python-pip python-cryptography cmake ninja autoconf automake libandroid-execinfo patchelf
 
