@@ -8,7 +8,7 @@
 
 Pre-built wheels for [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)  
 To install the package, copy the wheel file's URL from the [Releases](https://github.com/sergey21000/llama-cpp-python-wheels/releases) page and run:
-```
+```sh
 pip install PASTE_THE_COPIED_URL_HERE
 ```
 
@@ -16,37 +16,37 @@ pip install PASTE_THE_COPIED_URL_HERE
 
 > [!NOTE]
 > If `import llama_cpp` returns an error `Failed to load shared library: libgomp.so.1`, then you need to install the library
-> ```
+> ```sh
 > sudo apt-get update && apt-get install -y libgomp1
 > ```
 
 Linux x86_64 / Python 3.11 / CPU (Google Colab)
-```
+```sh
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cpu/llama_cpp_python-0.3.15-cp311-cp311-linux_x86_64.whl
 ```
 
 Linux x86_64 / Python 3.11 / CUDA 12.4 (Google Colab)
-```
+```sh
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cu124/llama_cpp_python-0.3.15-cp311-cp311-linux_x86_64.whl
 ```
 
 Linux x86_64 / Python 3.12 / CPU 
-```
+```sh
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cpu/llama_cpp_python-0.3.15-cp312-cp312-linux_x86_64.whl
 ```
 
 Linux x86_64 / Python 3.12 / CUDA 12.4 
-```
+```sh
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cu124/llama_cpp_python-0.3.15-cp312-cp312-linux_x86_64.whl
 ```
 
 Windows amd64 / Python 3.12 / CPU
-```
+```powershell
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cpu/llama_cpp_python-0.3.15-cp312-cp312-win_amd64.whl
 ```
 
 Windows amd64 / Python 3.12 / CUDA 12.8
-```
+```powershell
 pip install https://github.com/sergey21000/llama-cpp-python-wheels/releases/download/v0.3.15-cu128-win/llama_cpp_python-0.3.15-cp312-cp312-win_amd64.whl
 ```
 
