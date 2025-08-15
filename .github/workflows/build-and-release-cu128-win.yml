@@ -16,7 +16,7 @@ jobs:
         pyver: ["3.11", "3.12"]
         cuda: ["12.8.1"]
         releasetag: ["AVX2"]  # ["none", "AVX2", "AVX", "AVX512", "basic"]
-        cudaarch: ["all"]
+        cudaarch: ["all"]  # ["75;80;86;89;90"]
     defaults:
       run:
         shell: pwsh
