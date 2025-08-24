@@ -6,7 +6,7 @@ permissions:
   contents: write
 
 jobs:
-  build_wheels:
+  build_and_release_wheels:
     name: Build Wheel ${{ matrix.os }} ${{ matrix.pyver }} ${{ matrix.cuda }} ${{ matrix.releasetag }}
     runs-on: ${{ matrix.os }}
     strategy:
