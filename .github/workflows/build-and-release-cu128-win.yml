@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  build_wheels:
+  build_and_release_wheels:
     name: Build Wheel ${{ matrix.os }} ${{ matrix.pyver }} ${{ matrix.cuda }} ${{ matrix.releasetag }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -57,7 +57,7 @@ jobs:
           git config --system core.longpaths true
           uv pip install --upgrade build setuptools wheel packaging
 
-      - name: Build Wheel
+      - name: Build Wheels
         run: |
           $cudaVersion = $env:CUDAVER.Remove($env:CUDAVER.LastIndexOf('.')).Replace('.','')
           $env:CUDA_HOME = $env:CUDA_PATH
@@ -85,9 +85,10 @@ jobs:
           $tagVer = $wheel.name.split('-')[1]
           Write-Output "TAG_VERSION=$tagVer" >> $env:GITHUB_ENV
 
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*
-          tag_name: v${{ env.TAG_VERSION }}-cu${{ env.CUDA_VERSION }}-win
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release Wheels
+        uses: softprops/action-gh-release@v2
+          with:
+            files: dist/*
+            tag_name: v${{ env.TAG_VERSION }}-cu${{ env.CUDA_VERSION }}-win
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
