@@ -1,4 +1,4 @@
-name: Build and Release Wheels (CPU)
+name: Build and Release Wheels (CPU, Linux & Windows)
 
 on: workflow_dispatch
 
